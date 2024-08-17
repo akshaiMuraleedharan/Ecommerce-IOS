@@ -147,7 +147,7 @@ struct HomeView: View {
                 }
                 
                 if let bannerSingle = viewModel.bannerSingle {
-                    if let urlString = bannerSingle.imageUrl, let url = URL(string: urlString) {
+                    if let urlString = bannerSingle.imageURL, let url = URL(string: urlString) {
                         AsyncImage(url: url)
                             .frame(height: 150)
                             .clipped()
@@ -170,13 +170,14 @@ struct HomeView: View {
 }
 
 
+
 struct ProductsView: View {
-    var products: [Content.ContentDetail]
+    var products: [Content]
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
-                ForEach(products) { product in
+                ForEach(products, id: \.sku) { product in
                     VStack {
                         if let urlString = product.productImage, let url = URL(string: urlString) {
                             AsyncImage(url: url)
@@ -209,12 +210,12 @@ struct ProductsView: View {
 }
 
 struct BannerSliderView: View {
-    var banners: [Content.ContentDetail]
+    var banners: [Content]
     
     var body: some View {
         TabView {
-            ForEach(banners) { banner in
-                if let urlString = banner.imageUrl, let url = URL(string: urlString) {
+            ForEach(banners, id: \.title) { banner in
+                if let urlString = banner.imageURL, let url = URL(string: urlString) {
                     AsyncImage(url: url)
                         .frame(height: 200)
                         .clipped()
@@ -227,14 +228,14 @@ struct BannerSliderView: View {
 }
 
 struct CategoriesView: View {
-    var categories: [Content.ContentDetail]
+    var categories: [Content]
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 16) {
-                ForEach(categories) { category in
+                ForEach(categories, id: \.title) { category in
                     VStack {
-                        if let urlString = category.imageUrl, let url = URL(string: urlString) {
+                        if let urlString = category.imageURL, let url = URL(string: urlString) {
                             AsyncImage(url: url)
                                 .frame(width: 80, height: 80)
                                 .clipShape(Circle())
@@ -248,6 +249,7 @@ struct CategoriesView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()

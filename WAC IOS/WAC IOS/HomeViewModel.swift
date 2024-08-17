@@ -10,10 +10,10 @@ import Combine
 import CoreData
 
 class HomeViewModel: ObservableObject {
-    @Published var categories: [Content.ContentDetail] = []
-    @Published var banners: [Content.ContentDetail] = []
-    @Published var bannerSingle: Content.ContentDetail?
-    @Published var products: [Content.ContentDetail] = []
+    @Published var categories: [Content] = []
+    @Published var banners: [Content] = []
+    @Published var bannerSingle: Content?
+    @Published var products: [Content] = []
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -26,7 +26,7 @@ class HomeViewModel: ObservableObject {
         
         URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: [Content].self, decoder: JSONDecoder())
+            .decode(type: [Model].self, decoder: JSONDecoder())
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -34,25 +34,23 @@ class HomeViewModel: ObservableObject {
                 case .failure(let error):
                     print("Error: \(error)")
                 }
-            }, receiveValue: { [weak self] contents in
-                self?.handleContent(contents)
+            }, receiveValue: { [weak self] models in
+                self?.handleContent(models)
             })
             .store(in: &cancellables)
     }
     
-    private func handleContent(_ contents: [Content]) {
-        for content in contents {
-            switch content.type {
-            case .categories:
-                self.categories = content.contents.filter { $0.title != nil && $0.imageUrl != nil }
-            case .bannerSlider:
-                self.banners = content.contents.filter { $0.title != nil && $0.imageUrl != nil }
-            case .bannerSingle:
-                if let banner = content.contents.first {
-                    self.bannerSingle = banner
-                }
-            case .products:
-                self.products = content.contents.filter { $0.productName != nil && $0.productImage != nil }
+    private func handleContent(_ models: [Model]) {
+        for model in models {
+            switch model.type {
+            case "categories":
+                self.categories = model.contents ?? []
+            case "banner_slider":
+                self.banners = model.contents ?? []
+            case "banner_single":
+                self.bannerSingle = model.contents?.first
+            case "products":
+                self.products = model.contents ?? []
             default:
                 break
             }
@@ -60,3 +58,4 @@ class HomeViewModel: ObservableObject {
         // Implement offline storage saving logic here
     }
 }
+

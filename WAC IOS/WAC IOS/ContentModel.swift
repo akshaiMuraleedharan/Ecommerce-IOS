@@ -6,34 +6,41 @@
 //
 
 import Foundation
+import Combine
 
-enum ContentType: String, Decodable {
-    case bannerSlider = "banner_slider"
-    case products
-    case bannerSingle = "banner_single"
-    case categories = "catagories" // Corrected the key name to match the JSON
-    case type3 = "type 3"
-    case type4 = "type 4"
-    case type5 = "type 5"
-    case type6 = "type 6"
-}
-
-struct Content: Identifiable, Decodable {
+// MARK: - Model
+struct Model: Codable {
+    let type, title: String
+    let contents: [Content]?
     let id: String
-    let type: ContentType
-    let title: String?
-    let contents: [ContentDetail]
+    let imageURL: String?
 
-    struct ContentDetail: Decodable, Identifiable {
-        let id = UUID()
-        let title: String?
-        let imageUrl: String? 
-        let sku: String?
-        let productName: String?
-        let productImage: String?
-        let productRating: Int?
-        let actualPrice: String?
-        let offerPrice: String?
-        let discount: String?
+    enum CodingKeys: String, CodingKey {
+        case type, title, contents, id
+        case imageURL = "image_url"
     }
 }
+
+// MARK: - Content
+struct Content: Codable {
+    let title: String?
+    let imageURL: String?
+    let sku, productName: String?
+    let productImage: String?
+    let productRating: Int?
+    let actualPrice, offerPrice, discount: String?
+
+    enum CodingKeys: String, CodingKey {
+        case title
+        case imageURL = "image_url"
+        case sku
+        case productName = "product_name"
+        case productImage = "product_image"
+        case productRating = "product_rating"
+        case actualPrice = "actual_price"
+        case offerPrice = "offer_price"
+        case discount
+    }
+}
+
+typealias Models = [Model]

@@ -27,7 +27,7 @@ struct WAC_IOSApp: App {
         
         // Customize the navigation bar appearance
         let navAppearance = UINavigationBarAppearance()
-        navAppearance.backgroundColor = UIColor.green // Use UIColor.green or a custom color
+        navAppearance.backgroundColor = UIColor.green 
         navAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         UINavigationBar.appearance().standardAppearance = navAppearance
