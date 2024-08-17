@@ -19,35 +19,30 @@ struct ContentView: View {
                     .tabItem {
                         Label("Home", systemImage: "house")
                             .frame(height: 44)
-                            .background(BackgroundEllipse())
                     }
                 
                 Text("Categories")
                     .tabItem {
                         Label("Categories", systemImage: "list.bullet")
                             .frame(height: 44)
-                            .background(BackgroundEllipse())
                     }
                 
                 Text("Cart")
                     .tabItem {
                         Label("Cart", systemImage: "cart")
                             .frame(height: 44)
-                            .background(BackgroundEllipse())
                     }
                 
                 Text("Offers")
                     .tabItem {
                         Label("Offers", systemImage: "tag")
                             .frame(height: 44)
-                            .background(BackgroundEllipse())
                     }
                 
                 Text("Account")
                     .tabItem {
                         Label("Account", systemImage: "person")
                             .frame(height: 44)
-                            .background(BackgroundEllipse())
                     }
             }
             .navigationBarItems(leading: cartButton, trailing: notificationButton)
@@ -85,14 +80,6 @@ struct ContentView: View {
                     .offset(x: 10, y: -10)
             }
         }
-    }
-}
-
-struct BackgroundEllipse: View {
-    var body: some View {
-        Ellipse()
-            .fill(Color.blue.opacity(0.2))
-            .frame(height: 44)
     }
 }
 
@@ -135,7 +122,6 @@ struct SearchBar: UIViewRepresentable {
     }
 }
 
-
 struct HomeView: View {
     @ObservedObject var viewModel = HomeViewModel()
     
@@ -146,13 +132,13 @@ struct HomeView: View {
                     BannerSliderView(banners: viewModel.banners)
                 }
                 
-                if let bannerSingle = viewModel.bannerSingle {
-                    if let urlString = bannerSingle.imageURL, let url = URL(string: urlString) {
-                        AsyncImage(url: url)
-                            .frame(height: 150)
-                            .clipped()
-                            .padding(.horizontal)
-                    }
+                if let bannerSingle = viewModel.bannerSingle,
+                   let urlString = bannerSingle.imageURL,
+                   let url = URL(string: urlString) {
+                    AsyncImage(url: url)
+                        .frame(height: 150)
+                        .clipped()
+                        .padding(.horizontal)
                 }
                 
                 if !viewModel.categories.isEmpty {
@@ -164,12 +150,9 @@ struct HomeView: View {
                 }
             }
         }
-        .navigationTitle("E-Commerce")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-
 
 struct ProductsView: View {
     var products: [Content]
@@ -187,10 +170,12 @@ struct ProductsView: View {
                         Text(product.productName ?? "")
                             .font(.caption)
                             .lineLimit(2)
-                            .multilineTextAlignment(.center)
-                        Text(product.actualPrice ?? "")
-                            .font(.caption2)
+                            .multilineTextAlignment(.leading)
+                        HStack {
+                            Text(product.actualPrice ?? "")
+                                .font(.caption2)
                             .foregroundColor(.gray)
+                        }
                         if let offerPrice = product.offerPrice, product.actualPrice != offerPrice {
                             Text(offerPrice)
                                 .font(.caption)
@@ -250,7 +235,8 @@ struct CategoriesView: View {
     }
 }
 
-
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

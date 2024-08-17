@@ -14,7 +14,8 @@ class HomeViewModel: ObservableObject {
     @Published var banners: [Content] = []
     @Published var bannerSingle: Content?
     @Published var products: [Content] = []
-    
+    @Published var additionalData: [Model] = [] // For unknown types
+
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -27,6 +28,7 @@ class HomeViewModel: ObservableObject {
         URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [Model].self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -36,14 +38,17 @@ class HomeViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] models in
                 self?.handleContent(models)
+                self?.saveToOfflineStorage(models)
             })
             .store(in: &cancellables)
     }
     
     private func handleContent(_ models: [Model]) {
+        self.additionalData = models
+        
         for model in models {
             switch model.type {
-            case "categories":
+            case "catagories":
                 self.categories = model.contents ?? []
             case "banner_slider":
                 self.banners = model.contents ?? []
@@ -55,7 +60,9 @@ class HomeViewModel: ObservableObject {
                 break
             }
         }
-        // Implement offline storage saving logic here
+    }
+    
+    private func saveToOfflineStorage(_ models: [Model]) {
+        // Implement offline storage saving logic using SQLite or CoreData
     }
 }
-

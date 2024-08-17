@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 // MARK: - Model
 struct Model: Codable {
@@ -42,5 +41,3 @@ struct Content: Codable {
         case discount
     }
 }
-
-typealias Models = [Model]
