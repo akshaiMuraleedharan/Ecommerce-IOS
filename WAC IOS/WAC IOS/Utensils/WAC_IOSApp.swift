@@ -27,12 +27,14 @@ struct WAC_IOSApp: App {
         
         // Customize the navigation bar appearance
         let navAppearance = UINavigationBarAppearance()
-        navAppearance.backgroundColor = UIColor.green 
-        navAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navAppearance.backgroundColor = UIColor(named: "greenColor")
+//        navAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         UINavigationBar.appearance().standardAppearance = navAppearance
         UINavigationBar.appearance().compactAppearance = navAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+        UINavigationBar.appearance().isTranslucent = false
+        
     }
     
     let persistenceController = PersistenceController.shared
@@ -40,7 +42,7 @@ struct WAC_IOSApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                DashboardView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
