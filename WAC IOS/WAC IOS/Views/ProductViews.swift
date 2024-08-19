@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
-import SDWebImage
 import SDWebImageSwiftUI
 
 struct ProductsView: View {
@@ -15,35 +13,51 @@ struct ProductsView: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
+            HStack(spacing: 5) {
                 ForEach(products) { product in
-                    VStack {
+                    VStack(alignment: .leading, spacing: 6) {
                         if let urlString = product.productImage, let url = URL(string: urlString) {
                             WebImage(url: url)
                                 .resizable()
-                                .frame(width: 100, height: 100)
+                                .frame(width: 96, height: 152)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
+                        if product.discount != "0% Off" {
+                            Text("Sale \(product.discount)")
+                                .frame(width: 70, height: 18)
+                                .font(.caption2)
+                                .foregroundColor(.black)
+                                .padding(8)
+                                .background(Color("Colororange"))
+                                .clipShape(Capsule())
+                        }
                         Text(product.productName)
-                            .font(.caption)
+                            .font(.system(size: 10))
                             .lineLimit(2)
                             .multilineTextAlignment(.leading)
-                        HStack {
+                        
+                        RatingView(rating: .constant(4))
+                        
+                        HStack(spacing: 2) {
+                            if product.actualPrice != product.offerPrice {
+                                Text(product.offerPrice)
+                                    .font(.caption)
+                                    .foregroundColor(.red)
+                            }
                             Text(product.actualPrice)
                                 .font(.caption2)
                                 .foregroundColor(.gray)
+                                .strikethrough()
                         }
-                        if product.actualPrice != product.offerPrice {
-                            Text(product.offerPrice)
-                                .font(.caption)
-                                .foregroundColor(.red)
-                        }
-                        if product.discount != "0% Off" {
-                            Text(product.discount)
-                                .font(.caption2)
-                                .foregroundColor(.orange)
-                        }
+                        .frame(alignment: .leading)
                     }
+                    .padding(.all, 8)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("BorderColor"), lineWidth: 1)
+                    )
+                    .frame(width: 170, height: 315) 
                 }
             }
             .padding(.horizontal)
@@ -60,12 +74,11 @@ struct BannerSliderView: View {
                 WebImage(url: URL(string: banner.imageURL))
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 200)
                     .clipped()
             }
         }
         .tabViewStyle(PageTabViewStyle())
-        .frame(height: 200)
+        .frame(height: 124)
     }
 }
 
@@ -74,18 +87,24 @@ struct CategoriesView: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
+            HStack(alignment: .top, spacing: 5) {
                 ForEach(categories) { category in
-                    VStack {
+                    VStack(spacing: 4) {
                         if let urlString = category.imageURL, let url = URL(string: urlString) {
                             WebImage(url: url)
                                 .resizable()
-                                .frame(width: 80, height: 80)
-                                .clipShape(Circle())
+                                .frame(width: 94, height: 64)
                         }
                         Text(category.title)
                             .font(.caption)
                     }
+                    .padding(.vertical, 8)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("BorderColor"), lineWidth: 1)
+                    )
+                    .frame(width: 100, height: 150)
                 }
             }
             .padding(.horizontal)
@@ -93,66 +112,81 @@ struct CategoriesView: View {
     }
 }
 
-import SwiftUI
-
 struct HomeView: View {
     @ObservedObject var viewModel = DataViewModel()
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 16) {
-                if let bannerSlider = viewModel.bannerSlider {
-                    BannerSliderView(banners: bannerSlider.contents)
-                }
-                
-                HStack {
-                    Text("Best Sellers")
-                    Spacer()
-                    Button("View All") {
-                        // View all action
+        Group {
+            if viewModel.isLoading {
+                ProgressView("Loading...")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 8) {
+                        if let bannerSlider = viewModel.bannerSlider {
+                            BannerSliderView(banners: bannerSlider.contents)
+                        }
+                        
+                        HStack {
+                            Text("Most Popular")
+                                .font(.system(size: 20, weight: .medium))
+                            Spacer()
+                            Button("View all") {
+                                // View all action
+                            }
+                            .foregroundColor(.black)
+                        }
+                        .padding(.all, 5)
+                        
+                        if let mostPopular = viewModel.mostPopular {
+                            ProductsView(products: mostPopular.contents)
+                        }
+                        
+                        if let bannerSingle = viewModel.bannerSingle {
+                            if let urlString = bannerSingle.imageURL, let url = URL(string: urlString) {
+                                WebImage(url: url)
+                                    .resizable()
+                                    .frame(width: 336, height: 100)
+                                    .clipped()
+                                    .padding(.horizontal)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                        }
+                        
+                        HStack {
+                            Text("Categories")
+                                .font(.system(size: 20, weight: .medium))
+                            Spacer()
+                            Button("View all") {
+                                // View all action
+                            }
+                            .foregroundColor(.black)
+                        }
+                        .padding(.all, 5)
+                        
+                        if let categories = viewModel.categories {
+                            CategoriesView(categories: categories.contents)
+                        }
+                        
+                        HStack {
+                            Text("Featured Products")
+                                .font(.system(size: 20, weight: .medium))
+                            Spacer()
+                            Button("View all") {
+                                // View all action
+                            }
+                            .foregroundColor(.black)
+                        }
+                        .padding(.all, 5)
+                        
+                        if let bestSellers = viewModel.bestSellers {
+                            ProductsView(products: bestSellers.contents)
+                        }
                     }
-                }
-                
-                if let bestSellers = viewModel.bestSellers {
-                    ProductsView(products: bestSellers.contents)
-                }
-                
-                if let bannerSingle = viewModel.bannerSingle {
-                    if let urlString = bannerSingle.imageURL, let url = URL(string: urlString) {
-                        WebImage(url: url)
-                            .resizable()
-                            .frame(height: 150)
-                            .clipped()
-                            .padding(.horizontal)
-                    }
-                }
-                
-                HStack {
-                    Text("Categories")
-                    Spacer()
-                    Button("View All") {
-                        // View all action
-                    }
-                }
-                
-                if let categories = viewModel.categories {
-                    CategoriesView(categories: categories.contents)
-                }
-                
-                HStack {
-                    Text("Most Popular")
-                    Spacer()
-                    Button("View All") {
-                        // View all action
-                    }
-                }
-                
-                if let mostPopular = viewModel.mostPopular {
-                    ProductsView(products: mostPopular.contents)
                 }
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.fetchData()
         }
@@ -198,4 +232,7 @@ struct SearchBar: UIViewRepresentable {
     }
 }
 
+#Preview {
+    DashboardView()
+}
 

@@ -20,6 +20,7 @@
 		9A849F302C73092300044C33 /* APIResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A849F2F2C73092300044C33 /* APIResponseModel.swift */; };
 		9A849F332C730A4400044C33 /* ProductViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A849F322C730A4400044C33 /* ProductViews.swift */; };
 		9A849F382C7342DC00044C33 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9A849F372C7342DC00044C33 /* SDWebImageSwiftUI */; };
+		9A849F3C2C73B4FC00044C33 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A849F3B2C73B4FC00044C33 /* RatingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		9A849F2B2C73037D00044C33 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		9A849F2F2C73092300044C33 /* APIResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseModel.swift; sourceTree = "<group>"; };
 		9A849F322C730A4400044C33 /* ProductViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViews.swift; sourceTree = "<group>"; };
+		9A849F3B2C73B4FC00044C33 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			children = (
 				9A849F2B2C73037D00044C33 /* DashboardView.swift */,
 				9A849F322C730A4400044C33 /* ProductViews.swift */,
+				9A849F3B2C73B4FC00044C33 /* RatingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A849F3C2C73B4FC00044C33 /* RatingView.swift in Sources */,
 				9A849F2C2C73037D00044C33 /* DashboardView.swift in Sources */,
 				9A849F252C70650F00044C33 /* APIServiceManager.swift in Sources */,
 				9A849F152C70621900044C33 /* Persistence.swift in Sources */,
@@ -344,6 +348,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WAC IOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 5TW36DTZ3H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WAC-IOS-Info.plist";
@@ -378,6 +383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WAC IOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 5TW36DTZ3H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WAC-IOS-Info.plist";

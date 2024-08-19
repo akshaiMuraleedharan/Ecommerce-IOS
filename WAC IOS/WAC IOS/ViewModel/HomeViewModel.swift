@@ -14,6 +14,7 @@ class DataViewModel: ObservableObject {
     @Published var bannerSingle: BannerSingle?
     @Published var categories: Categories?
     @Published var mostPopular: MostPopular?
+    @Published var isLoading = true
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -27,6 +28,9 @@ class DataViewModel: ObservableObject {
             .map(\.data)
             .decode(type: [APIData].self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
+            .handleEvents(receiveOutput: { [weak self] _ in
+                self?.isLoading = false
+            })
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
                     print("Failed to fetch data: \(error)")
@@ -41,19 +45,14 @@ class DataViewModel: ObservableObject {
         for data in apiDataArray {
             switch data {
             case .bannerSlider(let value):
-                print("BannerSlider received: \(value)")
                 self.bannerSlider = value
             case .bestSellers(let value):
-                print("BestSellers received: \(value)")
                 self.bestSellers = value
             case .bannerSingle(let value):
-                print("BannerSingle received: \(value)")
                 self.bannerSingle = value
             case .categories(let value):
-                print("Categories received: \(value)")
                 self.categories = value
             case .mostPopular(let value):
-                print("MostPopular received: \(value)")
                 self.mostPopular = value
             case .emptyType:
                 print("EmptyType received")
