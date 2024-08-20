@@ -11,7 +11,7 @@ import SwiftUI
 struct WAC_IOSApp: App {
     init() {
         // Customize the tab bar appearance
-        let tabBarAppearance = UITabBarAppearance()
+        /*let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1.0)
         
         let selectedItemAppearance = UITabBarItemAppearance()
@@ -23,7 +23,7 @@ struct WAC_IOSApp: App {
         tabBarAppearance.compactInlineLayoutAppearance = selectedItemAppearance
         
         UITabBar.appearance().standardAppearance = tabBarAppearance
-        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance*/
         
         // Customize the navigation bar appearance
         let navAppearance = UINavigationBarAppearance()

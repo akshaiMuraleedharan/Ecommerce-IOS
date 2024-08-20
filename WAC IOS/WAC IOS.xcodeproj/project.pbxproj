@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A13808E2C74D03F0094FF2D /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13808D2C74D03F0094FF2D /* CustomTabBarView.swift */; };
 		9A849F0C2C70621800044C33 /* WAC_IOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A849F0B2C70621800044C33 /* WAC_IOSApp.swift */; };
 		9A849F102C70621900044C33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A849F0F2C70621900044C33 /* Assets.xcassets */; };
 		9A849F132C70621900044C33 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A849F122C70621900044C33 /* Preview Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9A13808D2C74D03F0094FF2D /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		9A849F082C70621800044C33 /* WAC IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WAC IOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A849F0B2C70621800044C33 /* WAC_IOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAC_IOSApp.swift; sourceTree = "<group>"; };
 		9A849F0F2C70621900044C33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				9A849F2B2C73037D00044C33 /* DashboardView.swift */,
 				9A849F322C730A4400044C33 /* ProductViews.swift */,
 				9A849F3B2C73B4FC00044C33 /* RatingView.swift */,
+				9A13808D2C74D03F0094FF2D /* CustomTabBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				9A849F3C2C73B4FC00044C33 /* RatingView.swift in Sources */,
 				9A849F2C2C73037D00044C33 /* DashboardView.swift in Sources */,
 				9A849F252C70650F00044C33 /* APIServiceManager.swift in Sources */,
+				9A13808E2C74D03F0094FF2D /* CustomTabBarView.swift in Sources */,
 				9A849F152C70621900044C33 /* Persistence.swift in Sources */,
 				9A849F302C73092300044C33 /* APIResponseModel.swift in Sources */,
 				9A849F232C70649900044C33 /* HomeViewModel.swift in Sources */,

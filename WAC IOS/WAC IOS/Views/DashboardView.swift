@@ -11,45 +11,15 @@ struct DashboardView: View {
     @State private var searchText = ""
     
     var body: some View {
-        TabView {
-            HomeView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                        .frame(height: 44)
+        ContentView() // Integrate ContentView into DashboardView
+            .navigationBarItems(leading: cartButton, trailing: notificationButton)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    SearchBar(searchText: $searchText)
+                        .frame(width: 280)
                 }
-            
-            Text("Categories")
-                .tabItem {
-                    Label("Categories", systemImage: "list.bullet")
-                        .frame(height: 44)
-                }
-            
-            Text("Cart")
-                .tabItem {
-                    Label("Cart", systemImage: "cart")
-                        .frame(height: 44)
-                }
-            
-            Text("Offers")
-                .tabItem {
-                    Label("Offers", systemImage: "tag")
-                        .frame(height: 44)
-                }
-            
-            Text("Account")
-                .tabItem {
-                    Label("Account", systemImage: "person")
-                        .frame(height: 44)
-                }
-        }
-        .navigationBarItems(leading: cartButton, trailing: notificationButton)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                SearchBar(searchText: $searchText)
-                    .frame(width: 280)
             }
-        }
     }
     
     var cartButton: some View {
@@ -74,7 +44,7 @@ struct DashboardView: View {
                     .foregroundColor(.white)
                     .padding(5)
                     .background(Circle().fill(Color.red))
-                    .offset(x: 12, y: -12) 
+                    .offset(x: 12, y: -12)
             }
         }
     }
